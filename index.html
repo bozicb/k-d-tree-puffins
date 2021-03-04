@@ -1,0 +1,57 @@
+<!DOCTYPE html> <!-- HTML5 document type -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
+    <script src="kdTree.js"></script>
+    <script src="go-debug.js"></script>
+
+    <title>k-d tree</title>
+    <meta name="description" content="a k-d tree algorithm for sorting puffins">
+    <link id="favicon" rel="icon" href="puffin.png" type="image/x-icon">
+    <meta charset="utf-8">
+    
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- import the webpage's javascript file -->
+    <script src="/script.js">window.onload=ddf;</script>
+  </head>  
+  <header>
+      <h1>
+        <img src="https://cdn.glitch.com/7f7fb386-1918-47c2-bb66-e1930e504e47%2Fpuffin-new.png?v=1614393324740" width="30">
+        k-d tree puffins
+      </h1>
+    </header>
+  <body>
+    
+    <p>
+      Welcome to an interactive demo of the <i>k-d tree</i> algorithm.
+    </p>
+    
+    <!-- The DIV for a Diagram needs an explicit size or else we will not see anything.
+     In this case we also add a background color so we can see that area. -->
+    <div class="row">
+      <div id="kdtree"></div>
+      <div id="binarytree"></div>
+    </div>
+    
+    <form>
+      <input type="text" maxlength="100" placeholder="Amazing puffin!">
+      <button type="submit" onclick="hello();">Isn't that an amazing puffin?</button>
+    </form>
+    
+    <!--button onclick="ddf()">bla
+      
+    </button-->
+
+    <!-- include the Glitch button to show what the webpage is about and
+          to make it easier for folks to view source and remix -->
+    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+    <script src="https://button.glitch.me/button.js" defer></script>
+  </body>
+</html>
