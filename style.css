@@ -1,0 +1,338 @@
+/* CSS files add styling rules to your content */
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 2em;
+}
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+}
+
+#control-button {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 10px;
+  opacity: 0.0;
+  transition: opacity .5s ease-in-out;
+}
+
+#hint-text {
+  color: #bfbfbf;
+  text-align: center;
+  width: 460px;
+  position: absolute;
+  margin-top: 210px;
+  margin-left: 10px;
+  opacity: 1.0;
+  transition: opacity .25s ease-in-out;
+}
+
+#picked {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #000;
+}
+
+#left {
+  float: left;
+}
+
+#results {
+  float: left;
+  margin-left: 10px;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+li {
+  padding: 5px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0px;
+}
+
+.tooltip {
+  height: 26px;
+  color: #333;
+  background-color: rgba(255,255,255,1.0);
+  border: 1px rgba(0,0,0,0.66) solid;
+  border-radius: 13px;
+  /*padding: 15px;*/
+  /*padding-left: 15px;*/
+  padding-right: 13px;
+  /*padding-top: 10px;*/
+}
+
+.tooltip p {
+  display: inline-block;
+  margin-top: -10px;
+  margin-bottom: 0px;
+}
+
+.tooltip-swatch {
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  border-radius: 13px;
+}
+
+svg.kdtree {
+  border: 1px solid #DDD;
+}
+
+#kdtree {
+  display: inline-block;
+}
+
+
+/* binary tree */
+
+#binarytree {
+  display: inline-block;
+}
+
+svg.binarytree {
+  border: 1px solid #DDD;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+.node text { font: 12px sans-serif; }
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+.sp-picker-container {
+  margin: 20px;
+}
+
+.heading {
+  margin-left: 30px;
+}
+
+#results ul {
+  margin-top: 25px;
+}
+
+#results ul li div {
+ border-radius: 15px;
+}
+
+/* styles */
+/* called by your view template */
+
+/* You might want to try something fancier: */
+/* less: http://lesscss.org/ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 25px;
+}
+
+h1 {
+  font-weight: bold;
+  color: pink;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+p {
+  max-width: 600px;
+}
+
+form {
+  margin-bottom: 25px;
+  padding: 15px;
+  background-color: cyan;
+  display: inline-block;
+  width: 100%;
+  max-width: 340px;
+  border-radius: 3px;
+}
+
+input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+button {
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: lightgrey;
+  border: 1px solid grey;
+  box-shadow: 2px 2px teal;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: yellow;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+footer {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid lightgrey;
+}
+
+footer > a {
+  color: #BBBBBB;
+}
+
+.nicejob {
+  text-decoration: line-through;
+}
+
+#control-button {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 10px;
+  opacity: 0.0;
+  transition: opacity .5s ease-in-out;
+}
+
+#hint-text {
+  color: #bfbfbf;
+  text-align: center;
+  width: 460px;
+  position: absolute;
+  margin-top: 210px;
+  margin-left: 10px;
+  opacity: 1.0;
+  transition: opacity .25s ease-in-out;
+}
+
+#picked {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #000;
+}
+
+#left {
+  float: left;
+}
+
+#results {
+  float: left;
+  margin-left: 10px;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+li {
+  padding: 5px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0px;
+}
+
+.tooltip {
+  height: 26px;
+  color: #333;
+  background-color: rgba(255,255,255,1.0);
+  border: 1px rgba(0,0,0,0.66) solid;
+  border-radius: 13px;
+  /*padding: 15px;*/
+  /*padding-left: 15px;*/
+  padding-right: 13px;
+  /*padding-top: 10px;*/
+}
+
+.tooltip p {
+  display: inline-block;
+  margin-top: -10px;
+  margin-bottom: 0px;
+}
+
+.tooltip-swatch {
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  border-radius: 13px;
+}
+
+svg.kdtree {
+  border: 1px solid #DDD;
+}
+
+#kdtree {
+  display: inline-block;
+}
+
+
+/* binary tree */
+
+#binarytree {
+  display: inline-block;
+}
+
+svg.binarytree {
+  border: 1px solid #DDD;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+.node text { font: 12px sans-serif; }
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+.sp-picker-container {
+  margin: 20px;
+}
+
+.heading {
+  margin-left: 30px;
+}
+
+#results ul {
+  margin-top: 25px;
+}
+
+#results ul li div {
+ border-radius: 15px;
+}
+
+
