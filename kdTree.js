@@ -80,7 +80,6 @@
 
     this.insert = function (point) {
       function innerSearch(node, parent) {
-
         if (node === null) {
           return parent;
         }
@@ -323,7 +322,7 @@
         object.dimension = node.dimension;
         object.depth = depth;
         node.children = [node.left, node.right];
-        object.node = node
+        object.node = node;
 
         var leftBounds, rightBounds;
         switch(object.dimension) {

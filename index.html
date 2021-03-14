@@ -8,7 +8,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
     <script src="kdTree.js"></script>
-    <script src="go-debug.js"></script>
+    <script src="script.js"></script>
 
     <title>k-d tree</title>
     <meta name="description" content="a k-d tree algorithm for sorting puffins">
@@ -18,8 +18,6 @@
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css">
     
-    <!-- import the webpage's javascript file -->
-    <script src="/script.js">window.onload=ddf;</script>
   </head>  
   <header>
       <h1>
@@ -30,8 +28,15 @@
   <body>
     
     <p>
-      Welcome to an interactive demo of the <i>k-d tree</i> algorithm.
+      Welcome to an interactive demo of the <i>k-d tree</i> algorithm with puffins. To start either click into the <i>k-d tree</i> area or create a new puffin.
     </p>
+    
+    <form>
+      <input type="text" maxlength="50" placeholder="Her size? (0-480)" id="size">
+      <input type="text" maxlength="50" placeholder="Her weight? (0-480)" id="weight">
+      <input type="text" maxlength="50" placeholder="Her name?" id="name">
+      <button type="submit" id="go">Go, my puffin!</button>
+    </form>
     
     <!-- The DIV for a Diagram needs an explicit size or else we will not see anything.
      In this case we also add a background color so we can see that area. -->
@@ -39,15 +44,6 @@
       <div id="kdtree"></div>
       <div id="binarytree"></div>
     </div>
-    
-    <form>
-      <input type="text" maxlength="100" placeholder="Amazing puffin!">
-      <button type="submit" onclick="hello();">Isn't that an amazing puffin?</button>
-    </form>
-    
-    <!--button onclick="ddf()">bla
-      
-    </button-->
 
     <!-- include the Glitch button to show what the webpage is about and
           to make it easier for folks to view source and remix -->
