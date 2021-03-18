@@ -5,6 +5,9 @@ var colorSubset = [];
 var tree = new kdTree(colorSubset, colorDistance, ["red", "green"]);
 var bTree;
 var rebalancing = false;
+var green_puffin = "https://cdn.glitch.com/fd278a09-24fb-43f5-9f83-20f3c05c5a41%2Fpuffin-green.png?v=1616021331793";
+var red_puffin = "https://cdn.glitch.com/fd278a09-24fb-43f5-9f83-20f3c05c5a41%2Fpuffin-red.png?v=1616021347946";
+var clicked_puffin = false;
 
 // Pretty good color distance from
 // http://www.compuphase.com/cmetric.htm
@@ -55,10 +58,10 @@ $(function(){ // on document load
 
   // D3 kdtree
 
-  var margin = {top: 0, right: 0, bottom: 0, left: 0},
-    width  = 480 - margin.left - margin.right,
-    height = width - margin.top - margin.bottom,
-    pointRadius = 6;
+  var margin = {top: 0, right: 10, bottom: 25, left: 25},
+    width  = 500 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    pointRadius = 5;
 
   var x = d3.scale.linear()
     .range([0, width])
@@ -67,6 +70,12 @@ $(function(){ // on document load
   var y = d3.scale.linear()
     .range([height, 0])
     .domain([0, 255]);
+  
+  var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+
+  var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
 
   var hintText = d3.select("#kdtree").append("p")
     .text("Click to add a new puffin.")
@@ -76,6 +85,29 @@ $(function(){ // on document load
     .attr("class", "kdtree")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
+  
+  svg.append("g")         // Add the X Axis
+        .attr("class", "x axis")
+        .attr("transform", "translate("+margin.left+"," + height + ")")
+        .call(xAxis);
+  
+  svg.append("g")         // Add the Y Axis
+        .attr("class", "y axis")
+        .attr("transform", "translate("+margin.left+","+(margin.top)+")")
+        .call(yAxis);
+  
+  svg.append("text")
+    .attr("transform", "translate(" + ((width+margin.left) / 2) + " ," + (height + margin.bottom - 10) + ")")
+    .style("font-weight", "bold")
+    .text("Speed");
+  
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", margin.left-20)
+    .attr("x", 0-(height/2)-15)
+    .attr("dy", "1em")
+    .style("font-weight", "bold")
+    .text("Strength");
   
   var btn = d3.select("#go");
 
@@ -100,19 +132,6 @@ $(function(){ // on document load
   var pointsG = graph.append("g")
     .attr("class", "points");
 
-  var tooltip = d3.select("body")
-    .append("div")
-    .attr("class", "tooltip")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("visibility", "hidden")
-
-  var swatch = tooltip.append("div")
-    .attr("class", "tooltip-swatch");
-
-  var label = tooltip.append("p")
-    .text("a simple tooltip");
-
   // D3 binarytree
 
   bTree = d3.layout.tree()
@@ -133,8 +152,14 @@ $(function(){ // on document load
     .attr("class", "points");
 
   svg.on('click', function() {
+    if(clicked_puffin) {
+      clicked_puffin = false;
+      return
+    };
     var coordinates = d3.mouse(this);
-    new_node(coordinates);
+    var speed = coordinates[0]/width*255;
+    var strength = (width-coordinates[1])/width*255+5;
+    new_node(coordinates, generate_name(), speed, strength, green_puffin);
   });
   
   btn.on('click', function() {
@@ -142,21 +167,20 @@ $(function(){ // on document load
     var size = document.getElementById("size").value;
     var weight = document.getElementById("weight").value;
     var name = document.getElementById("name").value;
-    weight = 480 - weight;
-    new_node([size,weight]);
+    var puffin = document.getElementById("fly").checked ? green_puffin : red_puffin;
+    new_node([size/255*480-5,width-weight*width/255+5], name, size, weight, puffin);
   });
 
-  function new_node(coordinates){
+  function new_node(coordinates, name, size, weight, puffin){
     var red   = x.invert( coordinates[0] );
     var green = y.invert( coordinates[1] );
     var color = d3.rgb(red, green, 128);
-    var object = { title: "user defined", hex: color.toString() };
+    var object = { title: "user defined", hex: color.toString(), name: name, size: size, weight: weight, puffin: puffin };
     setRGBfromHex(object);
-
+ 
     // check for very similar colors; don't insert to keep layouter sane
     var potentialDuplicates = tree.nearest(object, 1);
     if (potentialDuplicates.length > 0) {
-      // var potentialDuplicate = potentialDuplicates[0][0];
       var distance = potentialDuplicates[0][1];
       if (distance < 10) return;
     }
@@ -184,6 +208,25 @@ $(function(){ // on document load
   function transitionEnd() {
     rebalancing = false;
   }
+  
+  function pick_random(list) {
+    return list[Math.floor(Math.random()*list.length)]
+  }
+  
+  function generate_name(gender) {
+    var names = ["Fran", "Elisa", "Anita", "Deborah", "Sally", "Adele", "Shafi", 
+                 "Margaret", "Grace", "Sara", "Daphne", "Barbara", "Ada", "Mary", 
+                 "Karen", "Lixia", "Radia", "Amal", "Jade", "Sharla", "Kathleen", 
+                 "Cynthia", "Amy", "Cristina", "Lynn", "Véronique", "Radhia", 
+                "Lois", "Jeri", "Judy", "Susan", "Cordelia", "Mor", "Patricia", 
+                 "Leslie", "Gabriele", "Janet", "Monica", "Ming", "Yanhong", "Nancy", 
+                "Pattie", "Jennifer", "Brandeis", "Maja", "Kathryn", "Kay", "Terri", 
+                 "Catuscia", "Brigitte", "Diane", "Jean", "Alexandra", "Ellen", 
+                 "Betty", "Ana", "Lynn", "Alley", "Eva", "Xiaoyuan", "Hanna", 
+                 "Gloria", "Stephanie", "Marlyn", "Jeanette",
+                "Wang", "Kathy", "Shaula", "Greta", "Anna"];
+    return pick_random(names);
+  }
 
   function drawDataSubset(dataSubset) {
     if (dataSubset.length > 0) {
@@ -202,16 +245,19 @@ $(function(){ // on document load
       var pointsSelection = pointsG.selectAll(".point")
         .data(dataSubset, function(d){return d.hex + "point";});
 
-      pointsSelection.enter()
-        .append("circle")
+      var g = pointsSelection.enter()
+        .append("g")
         .attr("class", function(d) { d.fresh = true; return "point" })
         .attr("class", "point")
-        .attr("dimension", function(d) { return d.dimension;  })
-        .attr("r", pointRadius)
-        .attr("cx",      function(d) { return x(d.red);  })
-        .attr("cy",      function(d) { return y(d.green); })
         .style("fill",   function(d) { return d3.rgb(d.hex); })
-        .style("stroke", function(d) { return d3.rgb(d.hex); })
+        .style("stroke", function(d) { return d3.rgb(d.hex); });
+      
+      var img = g.append("svg:image")
+        .attr("xlink:href", function(d) {return d.puffin})
+        .attr("x",      function(d) { return x(d.red)-10;  })
+        .attr("y",      function(d) { return y(d.green)-10; })
+        .attr('width', 20)
+        .attr('height', 20)
         .on("mouseover", function(d) {
           if (d.fresh) return;
           var parent = d.node;
@@ -232,11 +278,31 @@ $(function(){ // on document load
             parent = parent.parent;
           }
           drawDataSubset(data);
+        })
+        .on("click", function(d){
+          clicked_puffin = true;
+          if (d.puffin == green_puffin) {
+            img.attr("xlink:href", red_puffin);
+            d.puffin = red_puffin;
+          }
+          else{
+            img.attr("xlink:href", green_puffin);
+            d.puffin = green_puffin;
+          }
         });
       
-      pointsSelection.enter().append("text").text("test").attr("dx", -20);
+        g.append("text")
+          .attr("x", function(d) {
+            return x(d.red+5);
+          })
+          .attr("y", function(d) {
+            return y(d.green+5);
+          })
+        .text(function(d){
+            return d.name+" ("+Math.round(d.size)+","+Math.round(d.weight)+")";
+        });
 
-      pointsSelection
+      g
         .style("stroke-width",  function(d) { return d.node.onAccessPath || d.node.isSearchResult ? 2 : 0; });
 
       // lines

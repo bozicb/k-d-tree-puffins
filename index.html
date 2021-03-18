@@ -28,12 +28,22 @@
   <body>
     
     <p>
-      Welcome to an interactive demo of the <i>k-d tree</i> algorithm with puffins. To start either click into the <i>k-d tree</i> area or create a new puffin.
+      Welcome to an interactive demo of the <i>k-d tree</i> algorithm with puffins. 
+      To start either click into the <i>k-d tree</i> area to pick a random puffin 
+      or create your own, new puffin.
     </p>
     
     <form>
-      <input type="text" maxlength="50" placeholder="Her size? (0-480)" id="size">
-      <input type="text" maxlength="50" placeholder="Her weight? (0-480)" id="weight">
+      <input type="text" maxlength="50" placeholder="Her speed? (0-250)" id="size">
+      <input type="text" maxlength="50" placeholder="Her strength? (0-250)" id="weight">
+      <label class="container">Flies up the cliff easily and gracefully.
+        <input type="radio" checked="checked" name="flies" id="fly">
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">Sadly just a bit too short of flying up.
+        <input type="radio" name="flies" id="no-fly">
+        <span class="checkmark"></span>
+      </label>
       <input type="text" maxlength="50" placeholder="Her name?" id="name">
       <button type="submit" id="go">Go, my puffin!</button>
     </form>
