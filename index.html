@@ -1,53 +1,70 @@
-<!DOCTYPE html> <!-- HTML5 document type -->
+<!DOCTYPE html>
+<!-- HTML5 document type -->
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
-    <script src="kdTree.js"></script>
+    <script src="kd_tree.js"></script>
     <script src="script.js"></script>
 
     <title>k-d tree</title>
-    <meta name="description" content="a k-d tree algorithm for sorting puffins">
-    <link id="favicon" rel="icon" href="puffin.png" type="image/x-icon">
-    <meta charset="utf-8">
-    
+    <meta
+      name="description"
+      content="a k-d tree algorithm for sorting puffins"
+    />
+    <link id="favicon" rel="icon" href="puffin.png" type="image/x-icon" />
+    <meta charset="utf-8" />
+
     <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css">
-    
-  </head>  
+    <link rel="stylesheet" href="/style.css" />
+  </head>
   <header>
-      <h1>
-        <img src="https://cdn.glitch.com/7f7fb386-1918-47c2-bb66-e1930e504e47%2Fpuffin-new.png?v=1614393324740" width="30">
-        k-d tree puffins
-      </h1>
-    </header>
+    <h1>
+      <img
+        src="https://cdn.glitch.com/7f7fb386-1918-47c2-bb66-e1930e504e47%2Fpuffin-new.png?v=1614393324740"
+        width="30"
+      />
+      k-d tree puffins
+    </h1>
+  </header>
   <body>
-    
     <p>
-      Welcome to an interactive demo of the <i>k-d tree</i> algorithm with puffins. 
-      To start either click into the <i>k-d tree</i> area to pick a random puffin 
-      or create your own, new puffin.
+      Welcome to an interactive demo of the <i>k-d tree</i> algorithm with
+      puffins. To start either click into the <i>k-d tree</i> area to pick a
+      random puffin or create your own, new puffin.
     </p>
-    
+
     <form>
-      <input type="text" maxlength="50" placeholder="Her speed? (0-250)" id="size">
-      <input type="text" maxlength="50" placeholder="Her strength? (0-250)" id="weight">
-      <label class="container">Flies up the cliff easily and gracefully.
-        <input type="radio" checked="checked" name="flies" id="fly">
+      <input
+        type="text"
+        maxlength="50"
+        placeholder="Her speed? (0-250)"
+        id="size"
+      />
+      <input
+        type="text"
+        maxlength="50"
+        placeholder="Her strength? (0-250)"
+        id="weight"
+      />
+      <label class="container"
+        >Flies up the cliff easily and gracefully.
+        <input type="radio" checked="checked" name="flies" id="fly" />
         <span class="checkmark"></span>
       </label>
-      <label class="container">Sadly just a bit too short of flying up.
-        <input type="radio" name="flies" id="no-fly">
+      <label class="container"
+        >Sadly just a bit too short of flying up.
+        <input type="radio" name="flies" id="no-fly" />
         <span class="checkmark"></span>
       </label>
-      <input type="text" maxlength="50" placeholder="Her name?" id="name">
+      <input type="text" maxlength="50" placeholder="Her name?" id="name" />
       <button type="submit" id="go">Go, my puffin!</button>
     </form>
-    
+
     <!-- The DIV for a Diagram needs an explicit size or else we will not see anything.
      In this case we also add a background color so we can see that area. -->
     <div class="row">

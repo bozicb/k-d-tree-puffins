@@ -1,12 +1,12 @@
-(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['exports'], factory);
-    } else if (typeof exports === 'object') {
-        factory(exports);
-    } else {
-        factory((root.commonJsStrict = {}));
-    }
-}(this, function (exports) {
+(function(root, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else if (typeof exports === "object") {
+    factory(exports);
+  } else {
+    factory((root.commonJsStrict = {}));
+  }
+})(this, function(exports) {
   function Node(obj, dimension, parent) {
     this.obj = obj;
     this.left = null;
@@ -15,8 +15,7 @@
     this.dimension = dimension;
   }
 
-  function kdTree(points, metric, dimensions) {
-
+  function kd_tree(points, metric, dimensions) {
     var self = this;
 
     function buildTree(points, depth, parent) {
@@ -31,7 +30,7 @@
         return new Node(points[0], dim, parent);
       }
 
-      points.sort(function (a, b) {
+      points.sort(function(a, b) {
         return a[dimensions[dim]] - b[dimensions[dim]];
       });
 
@@ -43,12 +42,12 @@
       return node;
     }
 
-    // Reloads a serialied tree
-    function loadTree (data) {
+    // Reloads a serialised tree
+    function loadTree(data) {
       // Just need to restore the `parent` parameter
       self.root = data;
 
-      function restoreParent (root) {
+      function restoreParent(root) {
         if (root.left) {
           root.left.parent = root;
           restoreParent(root.left);
@@ -67,9 +66,9 @@
     if (!Array.isArray(points)) loadTree(points, metric, dimensions);
     else this.root = buildTree(points, 0, null);
 
-    // Convert to a JSON serializable structure; this just requires removing
+    // Convert to a JSON serialisable structure; this just requires removing
     // the `parent` property
-    this.toJSON = function (src) {
+    this.toJSON = function(src) {
       if (!src) src = this.root;
       var dest = new Node(src.obj, src.dimension, null);
       if (src.left) dest.left = self.toJSON(src.left);
@@ -78,7 +77,7 @@
       return dest;
     };
 
-    this.insert = function (point) {
+    this.insert = function(point) {
       function innerSearch(node, parent) {
         if (node === null) {
           return parent;
@@ -101,7 +100,11 @@
         return;
       }
 
-      newNode = new Node(point, (insertPosition.dimension + 1) % dimensions.length, insertPosition);
+      newNode = new Node(
+        point,
+        (insertPosition.dimension + 1) % dimensions.length,
+        insertPosition
+      );
       dimension = dimensions[insertPosition.dimension];
 
       if (point[dimension] < insertPosition.obj[dimension]) {
@@ -111,7 +114,7 @@
       }
     };
 
-    this.remove = function (point) {
+    this.remove = function(point) {
       var node;
 
       function nodeSearch(node) {
@@ -133,16 +136,10 @@
       }
 
       function removeNode(node) {
-        var nextNode,
-          nextObj,
-          pDimension;
+        var nextNode, nextObj, pDimension;
 
         function findMin(node, dim) {
-          var dimension,
-            own,
-            left,
-            right,
-            min;
+          var dimension, own, left, right, min;
 
           if (node === null) {
             return null;
@@ -203,24 +200,23 @@
           node.left = null;
           node.obj = nextObj;
         }
-
       }
 
       node = nodeSearch(self.root);
 
-      if (node === null) { return; }
+      if (node === null) {
+        return;
+      }
 
       removeNode(node);
     };
 
-    this.nearest = function (point, maxNodes, maxDistance) {
-      var i,
-        result,
-        bestNodes;
+    this.nearest = function(point, maxNodes, maxDistance) {
+      var i, result, bestNodes;
 
-      bestNodes = new BinaryHeap(
-        function (e) { return -e[1]; }
-      );
+      bestNodes = new BinaryHeap(function(e) {
+        return -e[1];
+      });
 
       function nearestSearch(node) {
         var bestChild,
@@ -249,7 +245,10 @@
         linearDistance = metric(linearPoint, node.obj);
 
         if (node.right === null && node.left === null) {
-          if (bestNodes.size() < maxNodes || ownDistance < bestNodes.peek()[1]) {
+          if (
+            bestNodes.size() < maxNodes ||
+            ownDistance < bestNodes.peek()[1]
+          ) {
             saveNode(node, ownDistance);
           }
           return;
@@ -273,7 +272,10 @@
           saveNode(node, ownDistance);
         }
 
-        if (bestNodes.size() < maxNodes || Math.abs(linearDistance) < bestNodes.peek()[1]) {
+        if (
+          bestNodes.size() < maxNodes ||
+          Math.abs(linearDistance) < bestNodes.peek()[1]
+        ) {
           if (bestChild === node.left) {
             otherChild = node.right;
           } else {
@@ -291,8 +293,7 @@
         }
       }
 
-      if(self.root)
-        nearestSearch(self.root);
+      if (self.root) nearestSearch(self.root);
 
       result = [];
 
@@ -304,19 +305,19 @@
       return result;
     };
 
-    this.pointsBFS = function () {
+    this.pointsBFS = function() {
       var result = [];
       if (!this.root) return result;
-      var queue  = [];
+      var queue = [];
       var bounds = { x1: 0, y1: 0, x2: 255, y2: 255 };
       var bundle = { node: this.root, bounds: bounds, depth: 0 };
       queue.push(bundle);
-      while(queue.length > 0) {
+      while (queue.length > 0) {
         var bundle = queue.shift();
 
-        var node   = bundle.node;
+        var node = bundle.node;
         var bounds = bundle.bounds;
-        var depth  = bundle.depth;
+        var depth = bundle.depth;
         var object = node.obj;
 
         object.dimension = node.dimension;
@@ -325,21 +326,41 @@
         object.node = node;
 
         var leftBounds, rightBounds;
-        switch(object.dimension) {
+        switch (object.dimension) {
           case 0:
-            object.x1   = object.x2 = object.red;
-            object.y1   = bounds.y1;
-            object.y2   = bounds.y2;
-            leftBounds  = { x1: bounds.x1, y1: bounds.y1, x2: object.x2, y2: bounds.y2 };
-            rightBounds = { x1: object.x1, y1: bounds.y1, x2: bounds.x2, y2: bounds.y2 };
-          break;
+            object.x1 = object.x2 = object.red;
+            object.y1 = bounds.y1;
+            object.y2 = bounds.y2;
+            leftBounds = {
+              x1: bounds.x1,
+              y1: bounds.y1,
+              x2: object.x2,
+              y2: bounds.y2
+            };
+            rightBounds = {
+              x1: object.x1,
+              y1: bounds.y1,
+              x2: bounds.x2,
+              y2: bounds.y2
+            };
+            break;
           case 1:
-            object.y1   = object.y2 = object.green;
-            object.x1   = bounds.x1;
-            object.x2   = bounds.x2;
-            leftBounds  = { x1: bounds.x1, y1: bounds.y1, x2: bounds.x2, y2: object.y2 };
-            rightBounds = { x1: bounds.x1, y1: object.y1, x2: bounds.x2, y2: bounds.y2 };
-          break;
+            object.y1 = object.y2 = object.green;
+            object.x1 = bounds.x1;
+            object.x2 = bounds.x2;
+            leftBounds = {
+              x1: bounds.x1,
+              y1: bounds.y1,
+              x2: bounds.x2,
+              y2: object.y2
+            };
+            rightBounds = {
+              x1: bounds.x1,
+              y1: object.y1,
+              x2: bounds.x2,
+              y2: bounds.y2
+            };
+            break;
         }
 
         result.push(object);
@@ -347,17 +368,21 @@
 
         // Traverse the tree
         if (node.left) {
-          queue.push({ node: node.left,  bounds: leftBounds,  depth: depth + 1 });
-        };
+          queue.push({ node: node.left, bounds: leftBounds, depth: depth + 1 });
+        }
         if (node.right) {
-          queue.push({ node: node.right, bounds: rightBounds, depth: depth + 1 });
-        };
+          queue.push({
+            node: node.right,
+            bounds: rightBounds,
+            depth: depth + 1
+          });
+        }
       } // while
       return result;
     };
 
-    this.d3tree = function () {
-      function dfs (node) {
+    this.d3tree = function() {
+      function dfs(node) {
         if (!node) return "null"; // d3 expects JSON like nulls
         var object = {};
         object.name = node.obj.toString();
@@ -372,7 +397,7 @@
       return dfs(this.root);
     };
 
-    this.balanceFactor = function () {
+    this.balanceFactor = function() {
       function height(node) {
         if (node === null) {
           return 0;
@@ -394,7 +419,7 @@
   // Binary heap implementation from:
   // http://eloquentjavascript.net/appendix2.html
 
-  function BinaryHeap(scoreFunction){
+  function BinaryHeap(scoreFunction) {
     this.content = [];
     this.scoreFunction = scoreFunction;
   }
@@ -438,8 +463,7 @@
             this.content[i] = end;
             if (this.scoreFunction(end) < this.scoreFunction(node))
               this.bubbleUp(i);
-            else
-              this.sinkDown(i);
+            else this.sinkDown(i);
           }
           return;
         }
@@ -458,7 +482,7 @@
       while (n > 0) {
         // Compute the parent element's index, and fetch it.
         var parentN = Math.floor((n + 1) / 2) - 1,
-            parent = this.content[parentN];
+          parent = this.content[parentN];
         // Swap the elements if the parent is greater.
         if (this.scoreFunction(element) < this.scoreFunction(parent)) {
           this.content[parentN] = element;
@@ -476,12 +500,13 @@
     sinkDown: function(n) {
       // Look up the target element and its score.
       var length = this.content.length,
-          element = this.content[n],
-          elemScore = this.scoreFunction(element);
+        element = this.content[n],
+        elemScore = this.scoreFunction(element);
 
-      while(true) {
+      while (true) {
         // Compute the indices of the child elements.
-        var child2N = (n + 1) * 2, child1N = child2N - 1;
+        var child2N = (n + 1) * 2,
+          child1N = child2N - 1;
         // This is used to store the new position of the element,
         // if any.
         var swap = null;
@@ -489,16 +514,15 @@
         if (child1N < length) {
           // Look it up and compute its score.
           var child1 = this.content[child1N],
-              child1Score = this.scoreFunction(child1);
+            child1Score = this.scoreFunction(child1);
           // If the score is less than our element's, we need to swap.
-          if (child1Score < elemScore)
-            swap = child1N;
+          if (child1Score < elemScore) swap = child1N;
         }
         // Do the same checks for the other child.
         if (child2N < length) {
           var child2 = this.content[child2N],
-              child2Score = this.scoreFunction(child2);
-          if (child2Score < (swap == null ? elemScore : child1Score)){
+            child2Score = this.scoreFunction(child2);
+          if (child2Score < (swap == null ? elemScore : child1Score)) {
             swap = child2N;
           }
         }
@@ -517,8 +541,8 @@
     }
   };
 
-  this.kdTree = kdTree;
+  this.kd_tree = kd_tree;
 
-  exports.kdTree = kdTree;
+  exports.kd_tree = kd_tree;
   exports.BinaryHeap = BinaryHeap;
-}));
+});

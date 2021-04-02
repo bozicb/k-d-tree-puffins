@@ -14,8 +14,8 @@ h1 {
   position: absolute;
   margin-top: 10px;
   margin-left: 10px;
-  opacity: 0.0;
-  transition: opacity .5s ease-in-out;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #hint-text {
@@ -25,8 +25,8 @@ h1 {
   position: absolute;
   margin-top: 210px;
   margin-left: 10px;
-  opacity: 1.0;
-  transition: opacity .25s ease-in-out;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
 }
 
 #picked {
@@ -60,8 +60,8 @@ ul {
 .tooltip {
   height: 26px;
   color: #333;
-  background-color: rgba(255,255,255,1.0);
-  border: 1px rgba(0,0,0,0.66) solid;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px rgba(0, 0, 0, 0.66) solid;
   border-radius: 13px;
   /*padding: 15px;*/
   /*padding-left: 15px;*/
@@ -90,7 +90,6 @@ svg.kdtree {
   display: inline-block;
 }
 
-
 /* binary tree */
 
 #binarytree {
@@ -107,7 +106,9 @@ svg.binarytree {
   stroke-width: 3px;
 }
 
-.node text { font: 12px sans-serif; }
+.node text {
+  font: 12px sans-serif;
+}
 
 .link {
   fill: none;
@@ -128,7 +129,7 @@ svg.binarytree {
 }
 
 #results ul li div {
- border-radius: 15px;
+  border-radius: 15px;
 }
 
 /* styles */
@@ -218,8 +219,8 @@ footer > a {
   position: absolute;
   margin-top: 10px;
   margin-left: 10px;
-  opacity: 0.0;
-  transition: opacity .5s ease-in-out;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #hint-text {
@@ -229,8 +230,8 @@ footer > a {
   position: absolute;
   margin-top: 210px;
   margin-left: 10px;
-  opacity: 1.0;
-  transition: opacity .25s ease-in-out;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
 }
 
 #picked {
@@ -264,8 +265,8 @@ ul {
 .tooltip {
   height: 26px;
   color: #333;
-  background-color: rgba(255,255,255,1.0);
-  border: 1px rgba(0,0,0,0.66) solid;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px rgba(0, 0, 0, 0.66) solid;
   border-radius: 13px;
   /*padding: 15px;*/
   /*padding-left: 15px;*/
@@ -294,7 +295,6 @@ svg.kdtree {
   display: inline-block;
 }
 
-
 /* binary tree */
 
 #binarytree {
@@ -311,7 +311,9 @@ svg.binarytree {
   stroke-width: 3px;
 }
 
-.node text { font: 12px sans-serif; }
+.node text {
+  font: 12px sans-serif;
+}
 
 .link {
   fill: none;
@@ -332,7 +334,7 @@ svg.binarytree {
 }
 
 #results ul li div {
- border-radius: 15px;
+  border-radius: 15px;
 }
 
 svg {
@@ -409,10 +411,10 @@ path {
 
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
- 	top: 4px;
-	left: 4px;
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background: white;
+  top: 4px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
 }
